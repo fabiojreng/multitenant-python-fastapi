@@ -1,21 +1,22 @@
-from starlette.middleware.base import BaseHTTPMiddleware
 from fastapi import Request
 from sqlalchemy.exc import ProgrammingError, SQLAlchemyError
+from starlette.middleware.base import BaseHTTPMiddleware
+
 from app.infra.database.connection_postgreSQL import PostgresConnection
 
-EXCLUDED_PATHS = {"/docs", "/redoc", "/openapi.json"}
+EXCLUDED_PATHS = {"/", "/docs", "/redoc", "/openapi.json"}
 
 
 class TenantMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
-    
-        tenant = request.headers.get("tenant")
 
-        if not tenant:
-            raise ValueError("Tenant not provided")
+        tenant = request.headers.get("tenant")
 
         if request.url.path in EXCLUDED_PATHS:
             return await call_next(request)
+
+        if not tenant:
+            raise ValueError("Tenant not provided")
 
         connection = PostgresConnection(request)
 
@@ -32,7 +33,7 @@ class TenantMiddleware(BaseHTTPMiddleware):
 
         except SQLAlchemyError as e:
             db_session.rollback()
-            raise  ValueError(f"Database error: {str(e)}")
+            raise ValueError(f"Database error: {str(e)}")
 
         finally:
             connection.close()
