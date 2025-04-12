@@ -1,15 +1,14 @@
-from uuid import uuid4
 from datetime import datetime, timezone
-from typing import Optional
+from uuid import uuid4
 
 
 class Brand:
     def __init__(
-        self,
-        brand_id: str,
-        name: str,
-        description: Optional[str],
-        created_at: datetime,
+            self,
+            brand_id: str,
+            name: str,
+            description: str | None,
+            created_at: datetime,
     ):
         self.__brand_id = brand_id
         self.__name = name
@@ -17,7 +16,7 @@ class Brand:
         self.__created_at = created_at
 
     @staticmethod
-    def create(name: str, description: Optional[str] = None) -> "Brand":
+    def create(name: str, description: str | None) -> "Brand":
         return Brand(
             uuid4(),
             name,
@@ -27,7 +26,7 @@ class Brand:
 
     @staticmethod
     def restore(
-        brand_id: str, name: str, description: Optional[str], created_at: datetime
+            brand_id: str, name: str, description: str | None, created_at: datetime
     ) -> "Brand":
         return Brand(
             brand_id,
@@ -43,3 +42,15 @@ class Brand:
             "description": self.__description,
             "created_at": self.__created_at.isoformat(),
         }
+
+    def get_brand_id(self) -> str:
+        return str(self.__brand_id)
+
+    def get_name(self) -> str:
+        return self.__name
+
+    def get_description(self) -> str:
+        return self.__description
+
+    def get_created_at(self) -> str:
+        return str(self.__created_at)

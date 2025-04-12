@@ -1,5 +1,4 @@
 from datetime import datetime, timezone, date
-from typing import Optional
 from uuid import uuid4
 
 from app.domain.value_objects.price import Price
@@ -19,9 +18,9 @@ class Product:
             selling_price: Price,
             created_at: datetime,
             status: ProductStatus,
-            image: Optional[str] = None,
-            quantity_min: Optional[int] = None,
-            validate_date: Optional[date] = None,
+            image: str | None,
+            quantity_min: str | None,
+            validate_date: str | None,
     ):
         self.__product_id = product_id
         self.__name = name
@@ -47,8 +46,8 @@ class Product:
             quantity: int,
             price_cost: float,
             selling_price: float,
-            quantity_min: Optional[int] = None,
-            validate_date: Optional[date] = None,
+            quantity_min: int = None,
+            validate_date: date = None,
     ) -> "Product":
         return Product(
             uuid4(),
@@ -78,9 +77,9 @@ class Product:
             brand_id: str | None,
             category_id: str | None,
             supplier_id: str,
-            image: Optional[str] = None,
-            quantity_min: Optional[int] = None,
-            validate_date: Optional[date] = None,
+            image: str = None,
+            quantity_min: int = None,
+            validate_date: date = None,
     ) -> "Product":
         return Product(
             product_id,
@@ -116,3 +115,42 @@ class Product:
             "status": self.__status.value,
             "image": self.__image,
         }
+
+    def get_product_id(self) -> str:
+        return str(self.__product_id)
+
+    def get_name(self) -> str:
+        return self.__name
+
+    def get_image(self) -> str | None:
+        return self.__image
+
+    def get_brand_id(self) -> str | None:
+        return self.__brand_id
+
+    def get_category_id(self) -> str | None:
+        return self.__category_id
+
+    def get_supplier_id(self) -> str:
+        return self.__supplier_id
+
+    def get_quantity(self) -> int:
+        return self.__quantity
+
+    def get_quantity_min(self) -> int | None:
+        return self.__quantity_min
+
+    def get_price_cost(self) -> float:
+        return self.__price_cost.get_value()
+
+    def get_selling_price(self) -> float:
+        return self.__selling_price.get_value()
+
+    def get_validate_date(self) -> str | None:
+        return self.__validate_date
+
+    def get_created_at(self) -> str:
+        return str(self.__created_at)
+
+    def get_status(self) -> str:
+        return self.__status.value

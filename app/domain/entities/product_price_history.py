@@ -1,17 +1,17 @@
+from datetime import datetime, timezone
 from uuid import uuid4
-from datetime import datetime, date, timezone
-from typing import Optional
+
 from app.domain.value_objects.price import Price
 
 
 class ProductPriceHistory:
     def __init__(
-        self,
-        product_price_history_id: str,
-        product_id: str,
-        price_type: str,
-        price: Price,
-        created_at: datetime,
+            self,
+            product_price_history_id: str,
+            product_id: str,
+            price_type: str,
+            price: Price,
+            created_at: datetime,
     ):
         self.__product_price_history_id = product_price_history_id
         self.__product_id = product_id
@@ -21,9 +21,9 @@ class ProductPriceHistory:
 
     @staticmethod
     def create(
-        product_id: str,
-        price_type: str,
-        price: Price,
+            product_id: str,
+            price_type: str,
+            price: Price,
     ) -> "ProductPriceHistory":
         return ProductPriceHistory(
             uuid4(),
@@ -35,11 +35,11 @@ class ProductPriceHistory:
 
     @staticmethod
     def restore(
-        product_price_history_id: str,
-        product_id: str,
-        price_type: str,
-        price: Price,
-        created_at: datetime,
+            product_price_history_id: str,
+            product_id: str,
+            price_type: str,
+            price: Price,
+            created_at: datetime,
     ) -> "ProductPriceHistory":
         return ProductPriceHistory(
             product_price_history_id,

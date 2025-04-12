@@ -1,15 +1,15 @@
-from uuid import uuid4
 from datetime import datetime, timezone
 from typing import Optional
+from uuid import uuid4
 
 
 class Category:
     def __init__(
-        self,
-        category_id: str,
-        name: str,
-        description: Optional[str],
-        created_at: datetime,
+            self,
+            category_id: str,
+            name: str,
+            description: Optional[str],
+            created_at: datetime,
     ):
         self.__category_id = category_id
         self.__name = name
@@ -27,7 +27,7 @@ class Category:
 
     @staticmethod
     def restore(
-        category_id: str, name: str, description: Optional[str], created_at: datetime
+            category_id: str, name: str, description: Optional[str], created_at: datetime
     ) -> "Category":
         return Category(
             category_id,
@@ -35,3 +35,11 @@ class Category:
             description,
             created_at,
         )
+
+    def to_dict(self) -> dict:
+        return {
+            "category_id": self.__category_id,
+            "name": self.__name,
+            "description": self.__description,
+            "created_at": self.__created_at.isoformat(),
+        }

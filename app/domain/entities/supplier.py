@@ -1,21 +1,22 @@
-from uuid import uuid4
 from datetime import datetime, timezone
 from typing import Optional
-from app.domain.value_objects.name import Name
+from uuid import uuid4
+
 from app.domain.value_objects.document import Document
 from app.domain.value_objects.email import Email
+from app.domain.value_objects.name import Name
 
 
 class Supplier:
     def __init__(
-        self,
-        supplier_id: str,
-        cod: int,
-        name: Name,
-        document: Document,
-        email: Email,
-        phone: str | None,
-        created_at: datetime,
+            self,
+            supplier_id: str,
+            cod: int,
+            name: Name,
+            document: Document,
+            email: Email,
+            phone: str | None,
+            created_at: datetime,
     ):
         self.__supplier_id = supplier_id
         self.__cod = cod
@@ -27,11 +28,11 @@ class Supplier:
 
     @staticmethod
     def create(
-        cod: int,
-        name: str,
-        document: str,
-        email: str,
-        phone: Optional[str] = None,
+            cod: int,
+            name: str,
+            document: str,
+            email: str,
+            phone: Optional[str] = None,
     ) -> "Supplier":
         return Supplier(
             uuid4(),
@@ -45,13 +46,13 @@ class Supplier:
 
     @staticmethod
     def restore(
-        supplier_id: str,
-        cod: int,
-        name: str,
-        document: str,
-        email: str,
-        phone: Optional[str],
-        created_at: datetime,
+            supplier_id: str,
+            cod: int,
+            name: str,
+            document: str,
+            email: str,
+            phone: Optional[str],
+            created_at: datetime,
     ) -> "Supplier":
         return Supplier(
             supplier_id,
