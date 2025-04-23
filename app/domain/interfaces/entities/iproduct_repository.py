@@ -9,3 +9,7 @@ class ProductRepositoryInterface(ABC):
     @abstractmethod
     def create(self, params: dict) -> dict:
         pass
+
+    @abstractmethod
+    def find_by_id(self, product_id: int) -> dict:
+        pass
