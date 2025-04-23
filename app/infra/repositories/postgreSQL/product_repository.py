@@ -1,3 +1,5 @@
+from sqlalchemy.exc import NoResultFound
+
 from app.domain.interfaces.database.idatabase import ConnectionDBInterface
 from app.domain.interfaces.entities.iproduct_repository import ProductRepositoryInterface
 from app.infra.models.product_orm import ProductORM
@@ -19,3 +21,11 @@ class ProductRepository(ProductRepositoryInterface):
             session.commit()
             session.refresh(model)
         return model.to_entity()
+
+    def find_by_id(self, product_id: int) -> dict:
+        with self.__db.get_session() as session:
+            try:
+                product = session.query(ProductORM).filter_by(product_id=product_id).one()
+                return product.to_entity()
+            except NoResultFound:
+                return None
