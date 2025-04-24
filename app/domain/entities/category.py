@@ -1,5 +1,4 @@
 from datetime import datetime, timezone
-from typing import Optional
 from uuid import uuid4
 
 
@@ -8,7 +7,7 @@ class Category:
             self,
             category_id: str,
             name: str,
-            description: Optional[str],
+            description: str | None,
             created_at: datetime,
     ):
         self.__category_id = category_id
@@ -17,7 +16,7 @@ class Category:
         self.__created_at = created_at
 
     @staticmethod
-    def create(name: str, description: Optional[str] = None) -> "Category":
+    def create(name: str, description: str | None) -> "Category":
         return Category(
             uuid4(),
             name,
@@ -27,7 +26,7 @@ class Category:
 
     @staticmethod
     def restore(
-            category_id: str, name: str, description: Optional[str], created_at: datetime
+            category_id: str, name: str, description: str | None, created_at: datetime
     ) -> "Category":
         return Category(
             category_id,
@@ -43,3 +42,15 @@ class Category:
             "description": self.__description,
             "created_at": self.__created_at.isoformat(),
         }
+
+    def get_category_id(self) -> str:
+        return str(self.__category_id)
+
+    def get_name(self) -> str:
+        return self.__name
+
+    def get_description(self) -> str | None:
+        return self.__description
+
+    def get_created_at(self) -> datetime:
+        return self.__created_at
