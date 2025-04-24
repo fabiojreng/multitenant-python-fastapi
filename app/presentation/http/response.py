@@ -30,7 +30,7 @@ def response_created(message: str, data: Any = None) -> SchemaResponseHttp:
 
 
 def response_no_content(message: str, data: Any = None) -> SchemaResponseHttp:
-    return build_response(status.HTTP_202_ACCEPTED, "success", message, data | None)
+    return build_response(status.HTTP_202_ACCEPTED, "success", message, data)
 
 
 def response_bad_request(message: str, data: Any = None) -> SchemaResponseHttp:
