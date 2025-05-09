@@ -50,7 +50,7 @@ class Product:
             validate_date: date = None,
     ) -> "Product":
         return Product(
-            uuid4(),
+            str(uuid4()),
             name,
             brand_id,
             category_id,
@@ -99,7 +99,7 @@ class Product:
 
     def to_dict(self) -> dict:
         return {
-            "product_id": str(self.__product_id),
+            "product_id": self.__product_id,
             "name": self.__name,
             "brand_id": self.__brand_id,
             "category_id": self.__category_id,
@@ -117,7 +117,7 @@ class Product:
         }
 
     def get_product_id(self) -> str:
-        return str(self.__product_id)
+        return self.__product_id
 
     def get_name(self) -> str:
         return self.__name

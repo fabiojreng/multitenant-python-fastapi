@@ -18,7 +18,7 @@ class Brand:
     @staticmethod
     def create(name: str, description: str | None) -> "Brand":
         return Brand(
-            uuid4(),
+            str(uuid4()),
             name,
             description,
             datetime.now(timezone.utc),
@@ -44,7 +44,7 @@ class Brand:
         }
 
     def get_brand_id(self) -> str:
-        return str(self.__brand_id)
+        return self.__brand_id
 
     def get_name(self) -> str:
         return self.__name

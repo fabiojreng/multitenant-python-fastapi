@@ -26,7 +26,7 @@ class ProductPriceHistory:
             price: Price,
     ) -> "ProductPriceHistory":
         return ProductPriceHistory(
-            uuid4(),
+            str(uuid4()),
             product_id,
             price_type,
             Price(price),
