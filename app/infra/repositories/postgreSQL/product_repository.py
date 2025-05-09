@@ -1,5 +1,9 @@
+from sqlalchemy.exc import NoResultFound
+
 from app.domain.interfaces.database.idatabase import ConnectionDBInterface
-from app.domain.interfaces.entities.iproduct_repository import ProductRepositoryInterface
+from app.domain.interfaces.entities.iproduct_repository import (
+    ProductRepositoryInterface,
+)
 from app.infra.models.product_orm import ProductORM
 
 
@@ -14,13 +18,14 @@ class ProductRepository(ProductRepositoryInterface):
 
             for product in products_orm:
                 total_quantity = sum(s.quantity for s in product.shoppings)
-                last_purchase = max((s.created_at for s in product.shoppings), default=None)
+                last_purchase = max(
+                    (s.created_at for s in product.shoppings), default=None
+                )
 
                 product_data = product.to_entity()
-                product_data.update({
-                    "quantity": total_quantity,
-                    "created_at": last_purchase
-                })
+                product_data.update(
+                    {"quantity": total_quantity, "created_at": last_purchase}
+                )
 
                 products.append(product_data)
 
@@ -37,16 +42,17 @@ class ProductRepository(ProductRepositoryInterface):
     def find_by_id(self, product_id: str) -> dict:
         with self.__db.get_session() as session:
             try:
-                product = session.query(ProductORM).filter_by(product_id=product_id).one()
+                product = (
+                    session.query(ProductORM).filter_by(product_id=product_id).one()
+                )
 
                 total_quantity = sum(s.quantity for s in product.shoppings)
-                last_purchase = max((s.created_at for s in product.shoppings), default=None)
+                last_purchase = max(
+                    (s.created_at for s in product.shoppings), default=None
+                )
 
                 base = product.to_entity()
-                base.update({
-                    "quantity": total_quantity,
-                    "created_at": last_purchase
-                })
+                base.update({"quantity": total_quantity, "created_at": last_purchase})
 
                 return base
 

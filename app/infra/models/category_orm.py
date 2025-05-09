@@ -1,3 +1,4 @@
+import uuid
 from datetime import datetime, timezone
 
 from sqlalchemy import Column, String, Text, DateTime
@@ -12,7 +13,11 @@ class CategoryORM(Base):
     category_id = Column(String(36), primary_key=True)
     name = Column(String, nullable=False)
     description = Column(Text, nullable=True)
-    created_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), nullable=False)
+    created_at = Column(
+        DateTime(timezone=True),
+        default=lambda: datetime.now(timezone.utc),
+        nullable=False,
+    )
 
     @classmethod
     def from_entity(cls, category: "Category") -> "CategoryORM":
@@ -28,5 +33,5 @@ class CategoryORM(Base):
             category_id=self.category_id,
             name=self.name,
             description=self.description,
-            created_at=self.created_at
+            created_at=self.created_at,
         ).to_dict()

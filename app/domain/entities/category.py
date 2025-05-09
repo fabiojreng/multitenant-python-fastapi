@@ -4,11 +4,11 @@ from uuid import uuid4
 
 class Category:
     def __init__(
-            self,
-            category_id: str,
-            name: str,
-            description: str | None,
-            created_at: datetime,
+        self,
+        category_id: str,
+        name: str,
+        description: str | None,
+        created_at: datetime,
     ):
         self.__category_id = category_id
         self.__name = name
@@ -26,7 +26,7 @@ class Category:
 
     @staticmethod
     def restore(
-            category_id: str, name: str, description: str | None, created_at: datetime
+        category_id: str, name: str, description: str | None, created_at: datetime
     ) -> "Category":
         return Category(
             category_id,
