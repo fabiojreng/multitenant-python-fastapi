@@ -6,3 +6,4 @@ class ShoppingCreateSchema(BaseModel):
     product_id: str
     price_cost: float
     quantity: int
+    reason: str | None
