@@ -1,16 +1,14 @@
-from datetime import datetime
-
 from pydantic import BaseModel
 
 
 class SupplierCreateSchema(BaseModel):
-    cod: int
+    cod: int | None
     name: str
-    document: str
+    document: str | None
     email: str
-    phone: str
+    phone: str | None
 
 
 class SupplierResponseSchema(SupplierCreateSchema):
     supplier_id: str
-    created_at: datetime
+    created_at: str
