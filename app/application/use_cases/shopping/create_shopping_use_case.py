@@ -26,7 +26,7 @@ class CreateShoppingUseCase(UseCaseInterface):
 
             movement_stock = StockMovement.create(
                 shopping.get_product_id(), shopping.get_quantity(),
-                None, "in"
+                "in", params["reason"]
             )
 
             self.__stock_movements_repository.create(movement_stock)
@@ -39,6 +39,5 @@ class CreateShoppingUseCase(UseCaseInterface):
                 }
             )
 
-        except Exception as e:
-            print(e)
+        except:
             return response_internal_error("Erro ao registrar compra.")

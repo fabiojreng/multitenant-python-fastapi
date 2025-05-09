@@ -24,7 +24,7 @@ class CreateProductUseCase(UseCaseInterface):
 
             movement_stock = StockMovement.create(
                 product.get_product_id(), product.get_quantity(),
-                None, "in"
+                "in", None
             )
 
             self.__stock_movements_repository.create(movement_stock)
