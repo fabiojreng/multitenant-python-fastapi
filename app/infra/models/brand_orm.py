@@ -1,8 +1,6 @@
-import uuid
 from datetime import datetime, timezone
 
 from sqlalchemy import Column, String, Text, DateTime
-from sqlalchemy.dialects.postgresql import UUID
 
 from app.domain.entities.brand import Brand
 from app.infra.database.base import Base
@@ -11,7 +9,7 @@ from app.infra.database.base import Base
 class BrandORM(Base):
     __tablename__ = "brands"
 
-    brand_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    brand_id = Column(String(36), primary_key=True)
     name = Column(String, nullable=False)
     description = Column(Text, nullable=True)
     created_at = Column(DateTime(timezone=True), nullable=False, default=lambda: datetime.now(timezone.utc))

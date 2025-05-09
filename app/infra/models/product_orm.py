@@ -1,8 +1,7 @@
 from datetime import datetime, timezone
-from uuid import uuid4
 
 from sqlalchemy import Column, String, Text, ForeignKey, Integer, Numeric, Date, DateTime, Enum as SAEnum
-from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import relationship
 
 from app.domain.entities.product import Product
 from app.domain.value_objects.status import ProductStatus
@@ -12,13 +11,13 @@ from app.infra.database.base import Base
 class ProductORM(Base):
     __tablename__ = "products"
 
-    product_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    product_id = Column(String(36), primary_key=True)
     name = Column(String(255), nullable=False)
     image = Column(Text, nullable=True)
 
-    brand_id = Column(UUID(as_uuid=True), ForeignKey("brands.brand_id"), nullable=True)
-    category_id = Column(UUID(as_uuid=True), ForeignKey("categories.category_id"), nullable=True)
-    supplier_id = Column(UUID(as_uuid=True), ForeignKey("suppliers.supplier_id"), nullable=False)
+    brand_id = Column(String(36), ForeignKey("brands.brand_id"), nullable=True)
+    category_id = Column(String(36), ForeignKey("categories.category_id"), nullable=True)
+    supplier_id = Column(String(36), ForeignKey("suppliers.supplier_id"), nullable=False)
 
     quantity = Column(Integer, nullable=False)
     quantity_min = Column(Integer, nullable=True)
@@ -31,6 +30,8 @@ class ProductORM(Base):
 
     status = Column(SAEnum(ProductStatus, values_callable=lambda enum: [e.value for e in enum]), nullable=False,
                     default=ProductStatus.ACTIVE)
+
+    shoppings = relationship("ShoppingORM", back_populates="product")
 
     @classmethod
     def from_entity(cls, product: "Product") -> "ProductORM":
@@ -52,7 +53,7 @@ class ProductORM(Base):
 
     def to_entity(self) -> "Product":
         return Product.restore(
-            product_id=str(self.product_id),
+            product_id=self.product_id,
             name=self.name,
             quantity=self.quantity,
             price_cost=float(self.price_cost),

@@ -2,20 +2,19 @@ from datetime import datetime, timezone
 from uuid import uuid4
 
 from sqlalchemy import Column, String, ForeignKey, Integer, DateTime
-from sqlalchemy.dialects.postgresql import UUID
 
-from app.domain.entities.stock_moviments import StockMovement
+from app.domain.entities.stock_movements import StockMovement
 from app.infra.database.base import Base
 
 
 class StockMovementORM(Base):
     __tablename__ = "stock_movements"
 
-    stock_movement_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
-    product_id = Column(UUID(as_uuid=True), ForeignKey("products.product_id"), nullable=False)
+    stock_movement_id = Column(String(36), primary_key=True, default=uuid4)
+    product_id = Column(String(36), ForeignKey("products.product_id"), nullable=False)
     quantity_changed = Column(Integer, nullable=False)
     movement_type = Column(String, nullable=False)
-    reason = Column(String, nullable=True)
+    reason = Column(String, nullable=True)  # Converter para Enum depois
     date_movement = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), nullable=False)
 
     @classmethod
@@ -31,8 +30,8 @@ class StockMovementORM(Base):
 
     def to_entity(self) -> "StockMovement":
         return StockMovement.restore(
-            stock_movement_id=str(self.stock_movement_id),
-            product_id=str(self.product_id),
+            stock_movement_id=self.stock_movement_id,
+            product_id=self.product_id,
             quantity_changed=self.quantity_changed,
             movement_type=self.movement_type,
             reason=self.reason,
