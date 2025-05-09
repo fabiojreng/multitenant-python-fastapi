@@ -27,7 +27,11 @@ class PostgresConnection(ConnectionDBInterface):
     def __init__(self, request: Request):
         self.request = request
         self.db = None
-        self.SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+        self.engine = engine
+        self.SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=self.engine)
+
+    def get_engine(self):
+        return self.engine
 
     def connect(self):
         print("abrindo conexão")
