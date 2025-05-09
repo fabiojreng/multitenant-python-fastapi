@@ -66,7 +66,7 @@ class StockMovement:
         }
 
     def get_stock_movement_id(self) -> str:
-        return str(self.__stock_movement_id)
+        return self.__stock_movement_id
 
     def get_product_id(self) -> str:
         return str(self.__product_id)
