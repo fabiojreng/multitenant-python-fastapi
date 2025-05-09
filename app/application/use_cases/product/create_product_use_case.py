@@ -1,5 +1,5 @@
 from app.domain.entities.product import Product
-from app.domain.entities.stock_moviments import StockMovement
+from app.domain.entities.stock_movements import StockMovement
 from app.domain.interfaces.entities.iproduct_repository import ProductRepositoryInterface
 from app.domain.interfaces.entities.istock_movements_repository import StockMovementsRepositoryInterface
 from app.domain.interfaces.use_case.use_case_interface import UseCaseInterface
@@ -37,5 +37,5 @@ class CreateProductUseCase(UseCaseInterface):
                 }
             )
 
-        except Exception as e:
+        except:
             return response_internal_error("Erro inesperado ao criar o produto.")
